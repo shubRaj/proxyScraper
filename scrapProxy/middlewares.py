@@ -101,3 +101,6 @@ class ScrapproxyDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+class CustomProxyMiddleware:
+    def process_request(self, request, spider):
+        request.meta[“proxy”] = "http://192.168.1.1:8050"
