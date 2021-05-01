@@ -1,5 +1,9 @@
 import scrapy,re,json
 from urllib.parse import urlparse,parse_qs
+"""
+Get rotating ip at :- https://proxy.webshare.io
+
+"""
 # from port_checker import port_checker
 
 # def get_proxy():
@@ -142,9 +146,15 @@ class ProxySpider(scrapy.Spider):
             for anonymity in anonymities:
                 for ssl in ("yes","no"):
                     yield scrapy.Request(url=f"https://api.proxyscrape.com/v2/?request=getproxies&protocol=http&timeout=10000&country={http_country}&ssl={ssl}&anonymity={anonymity}",callback=self.parse_proxyscrape,
+                    meta={
+                        "proxy":"185.30.232.18:9999"
+                    }
                     )
         for socks4_country in socks4_country_code:
             yield scrapy.Request(url=f"https://api.proxyscrape.com/v2/?request=getproxies&protocol=socks4&timeout=10000&country={socks4_country}",callback=self.parse_proxyscrape,
+            meta={
+                        "proxy":"185.30.232.18:9999"
+            }
             )
         for socks5_country in socks5_country_code:
             yield scrapy.Request(url=f"https://api.proxyscrape.com/v2/?request=getproxies&protocol=socks4&timeout=10000&country={socks5_country}",callback=self.parse_proxyscrape,)
